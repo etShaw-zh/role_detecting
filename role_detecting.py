@@ -13,6 +13,7 @@ from PIL import Image
 localpath = 'role_detecting/data/'
 gitpath = 'data/'
 
+# path = localpath
 path = gitpath
 
 df = pd.read_csv(path + 'social_beh_cog_emo_indeces.csv', encoding='utf_8_sig')
@@ -36,6 +37,10 @@ st.subheader('当前数据集的描述性统计： ')
 st.dataframe(X_exp.describe().T)
 
 rforest.fit(X_exp, y_exp)
+_y_pred = rforest.predict(X_exp)
+_y = pd.DataFrame(_y_pred)
+_y.columns = ['type_code']
+# acc = round(accuracy_score(y_exp, _y_pred), 5)
 
 def _accuracy(f, Y_test, X_test):
     acc = accuracy_score(Y_test, f(X_test))
@@ -144,6 +149,7 @@ name_to_id = {
     'D—Mag—尹子辰—整合类': 60,
     'D—Mag—张峻源—探究类': 61,
 }
+type_code_to_name = ['', '协调类', '整合类', '探究类', '辅助类', '边缘类', ]
 
 explainer = shap.TreeExplainer(rforest)
 
@@ -151,16 +157,20 @@ st.subheader('影响模型的重要特征：   ')
 _shap_values = explainer.shap_values(X_exp)
 st_shap(shap.summary_plot(_shap_values[1], X_exp, plot_type='bar'), height=600, width=800)
 
+# st.write('模型准确率：   ', acc)
+
 st.subheader('模型解释：   ')
-option = st.selectbox(
+user_name = st.selectbox(
     '请选择要查看的样本：',
     name_to_id.keys())
 
-current_id = name_to_id[option]
+current_id = name_to_id[user_name]
 
-st.write('你当前选择的样本为：   ', option)
+st.write('你当前选择的样本为：   ', user_name)
 
-if option:
-    shap_values = explainer.shap_values(X_exp.iloc[current_id, :].astype(float))
+if user_name:
+    _x = X_exp.iloc[current_id, :].astype(float)
+    st.write('你当前选择的样本预测结果为：   ', type_code_to_name[_y.loc[current_id, 'type_code']])
+    shap_values = explainer.shap_values(_x)
     shap.initjs()
-    st_shap(shap.force_plot(explainer.expected_value[1], shap_values[1], X_exp.iloc[current_id, :].astype(float)), height=200, width=800)
+    st_shap(shap.force_plot(explainer.expected_value[1], shap_values[1], _x), height=200, width=800)
