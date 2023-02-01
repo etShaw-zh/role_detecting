@@ -8,9 +8,14 @@ from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_sc
 from statistics import mean, stdev
 from sklearn.model_selection import KFold
 import torch
+from PIL import Image
 
+localpath = 'role_detecting/data/'
+gitpath = 'data/'
 
-df = pd.read_csv('data/social_beh_cog_emo_indeces.csv', encoding='utf_8_sig')
+path = gitpath
+
+df = pd.read_csv(path + 'social_beh_cog_emo_indeces.csv', encoding='utf_8_sig')
 
 rforest = RandomForestClassifier(n_estimators=100, max_depth=5, min_samples_split=2, random_state=0)
 
@@ -22,6 +27,11 @@ st.title('角色识别随机森林模型可解释分析')
 
 # st.subheader('当前数据集： ')
 # st.dataframe(X_exp)
+
+
+st.subheader('可视化随机森林结果： ')
+image = Image.open(path + 'rforest_img.png')
+st.image(image, caption='随机森林结果可视化')
 
 st.subheader('当前数据集的描述性统计： ')
 st.dataframe(X_exp.describe().T)
@@ -140,7 +150,7 @@ explainer = shap.TreeExplainer(rforest)
 
 st.subheader('影响模型的重要特征：   ')
 _shap_values = explainer.shap_values(X_exp)
-st_shap(shap.summary_plot(_shap_values[1], X_exp, plot_type='bar'))
+st_shap(shap.summary_plot(_shap_values[1], X_exp, plot_type='bar'), height=600, width=800)
 
 st.subheader('模型解释：   ')
 option = st.selectbox(
@@ -154,4 +164,4 @@ st.write('你当前选择的样本为：   ', option)
 if option:
     shap_values = explainer.shap_values(X_exp.iloc[current_id, :].astype(float))
     shap.initjs()
-    st_shap(shap.force_plot(explainer.expected_value[1], shap_values[1], X_exp.iloc[current_id, :].astype(float)), height=200, width=1000)
+    st_shap(shap.force_plot(explainer.expected_value[1], shap_values[1], X_exp.iloc[current_id, :].astype(float)), height=200, width=800)
