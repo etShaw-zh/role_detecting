@@ -4,7 +4,6 @@ from sklearn.ensemble import RandomForestClassifier
 import shap
 import pandas as pd
 import numpy as np
-from plotly.subplots import make_subplots
 from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score
 from statistics import mean, stdev
 from sklearn.model_selection import KFold
@@ -152,7 +151,6 @@ current_id = name_to_id[option]
 st.write('你当前选择的样本为：   ', option)
 
 if option:
-    fig = make_subplots(rows=1, cols=2, horizontal_spacing=0.035)
     shap_values = explainer.shap_values(X_exp.iloc[current_id, :].astype(float))
     shap.initjs()
     st_shap(shap.force_plot(explainer.expected_value[1], shap_values[1], X_exp.iloc[current_id, :].astype(float)), height=200, width=1000)
