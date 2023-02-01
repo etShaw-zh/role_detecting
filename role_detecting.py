@@ -14,7 +14,8 @@ df = pd.read_csv('data/social_beh_cog_emo_indeces.csv', encoding='utf_8_sig')
 
 rforest = RandomForestClassifier(n_estimators=100, max_depth=5, min_samples_split=2, random_state=0)
 
-X_exp = df.drop(['group_id', 'group_type', 'name', 'role', 'role_label', '3', '12', '102', '021D', '021U', '021C', '111D', '111U', '030T', '030C', '201', '120D', '120U', '120C', '210', 'exp_none', 'int_none'], 1)
+# X_exp = df.drop(['group_id', 'group_type', 'name', 'role', 'role_label', '3', '12', '102', '021D', '021U', '021C', '111D', '111U', '030T', '030C', '201', '120D', '120U', '120C', '210', 'exp_none', 'int_none'], 1)
+X_exp = df.drop(['group_id', 'group_type', 'name', 'role', 'role_label', 'exp_none', 'int_none'], 1)
 y_exp = df['role_label']
 
 st.title('角色识别随机森林模型可解释分析')
