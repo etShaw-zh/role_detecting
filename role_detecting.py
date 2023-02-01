@@ -28,13 +28,9 @@ st.title('角色识别随机森林模型可解释分析')
 # st.subheader('当前数据集： ')
 # st.dataframe(X_exp)
 
-@st.cache(persist=True)
-def load_img():
-    st.subheader('可视化随机森林结果： ')
-    image = Image.open(path + 'rforest_img.png')
-    st.image(image, caption='随机森林结果可视化')
-
-load_img()
+# st.subheader('可视化随机森林结果： ')
+# image = Image.open(path + 'rforest_img.png')
+# st.image(image, caption='随机森林结果可视化')
 
 st.subheader('当前数据集的描述性统计： ')
 st.dataframe(X_exp.describe().T)
