@@ -33,6 +33,7 @@ st.title('角色识别随机森林模型可解释分析')
 # image = Image.open(path + 'rforest_img.png')
 # st.image(image, caption='随机森林结果可视化')
 
+
 st.subheader('当前数据集的描述性统计： ')
 st.dataframe(X_exp.describe().T)
 
@@ -160,17 +161,19 @@ st_shap(shap.summary_plot(_shap_values[1], X_exp, plot_type='bar'), height=600, 
 # st.write('模型准确率：   ', acc)
 
 st.subheader('模型解释：   ')
-user_name = st.selectbox(
-    '请选择要查看的样本：',
-    name_to_id.keys())
+col1, col2, col3, col4 = st.columns(4)
+with col1:
+    user_name = st.selectbox(
+        '请选择要查看的样本：',
+        name_to_id.keys())
 
 current_id = name_to_id[user_name]
 
-st.write('你当前选择的样本为：   ', user_name)
-
-if user_name:
-    _x = X_exp.iloc[current_id, :].astype(float)
-    st.write('你当前选择的样本预测结果为：   ', type_code_to_name[_y.loc[current_id, 'type_code']])
-    shap_values = explainer.shap_values(_x)
-    shap.initjs()
-    st_shap(shap.force_plot(explainer.expected_value[1], shap_values[1], _x), height=200, width=800)
+with col2:
+    st.write('你当前选择的样本为：   ', user_name)
+    if user_name:
+        _x = X_exp.iloc[current_id, :].astype(float)
+        st.write('你当前选择的样本预测结果为：   ', type_code_to_name[_y.loc[current_id, 'type_code']])
+        shap_values = explainer.shap_values(_x)
+        shap.initjs()
+        st_shap(shap.force_plot(explainer.expected_value[1], shap_values[1], _x), height=200, width=800)
