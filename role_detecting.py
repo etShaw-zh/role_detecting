@@ -141,7 +141,7 @@ st.subheader('影响模型的重要特征：   ')
 _shap_values = explainer.shap_values(X_exp)
 st_shap(shap.summary_plot(_shap_values[1], X_exp, plot_type='bar'))
 
-st.subheader('模型可解释：   ')
+st.subheader('模型解释：   ')
 option = st.selectbox(
     '请选择要查看的样本：',
     name_to_id.keys())
