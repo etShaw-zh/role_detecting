@@ -4,4 +4,5 @@ scikit-learn==1.2.1
 shap==0.41.0
 streamlit==1.17.0
 torch==1.13.1
+matplotlib==3.6.3
 streamlit_shap==1.0.2
