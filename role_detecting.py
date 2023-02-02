@@ -168,7 +168,8 @@ user_name = st.selectbox(
 
 current_id = name_to_id[user_name]
 
-st.write('你当前选择的样本为：   ', user_name)
+st.write('你当前选择的样本 id 为：   ', current_id)
+st.write('你当前选择的样本 name 为：   ', user_name)
 if user_name:
     _x = X_exp.iloc[current_id, :].astype(float)
     st.write('你当前选择的样本预测结果为：   ', type_code_to_name[_y.loc[current_id, 'type_code']])
