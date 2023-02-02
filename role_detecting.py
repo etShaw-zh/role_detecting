@@ -156,7 +156,8 @@ explainer = shap.TreeExplainer(rforest)
 
 st.subheader('影响模型的重要特征：   ')
 _shap_values = explainer.shap_values(X_exp)
-st_shap(shap.summary_plot(_shap_values[1], X_exp, plot_type='bar'), height=600, width=800)
+# st_shap(shap.summary_plot(_shap_values[1], X_exp, plot_type='bar'), height=600, width=800)
+st_shap(shap.summary_plot(_shap_values[1], X_exp, height=600, width=800)
 
 # st.write('模型准确率：   ', acc)
 
