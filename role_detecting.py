@@ -158,6 +158,11 @@ st.subheader('影响模型的重要特征：   ')
 _shap_values = explainer.shap_values(X_exp)
 # st_shap(shap.summary_plot(_shap_values[1], X_exp, plot_type='bar'), height=600, width=800)
 st_shap(shap.summary_plot(_shap_values[1], X_exp), height=600, width=800)
+st.markdown('纵轴按照所有样本的SHAP值之和对特征排序，横轴是SHAP值（特征对模型输出的影响分布）；')
+st.markdown('每个点代表一个样本，样本量在纵向堆积，颜色表示特征值（红色对应高值，蓝色对应低值）；')
+st.markdown('以第一行为例，表明高LSTAT（红色）对预测是负向影响，低LSTAT（蓝色）对预测是正向影响；')
+
+
 
 # st.write('模型准确率：   ', acc)
 
@@ -177,15 +182,8 @@ if user_name:
     shap.initjs()
     st_shap(shap.force_plot(explainer.expected_value[1], shap_values[1], _x), height=200, width=800)
 
-st.subheader('模型解释可视化解释示例：   ')
-st.markdown('Shap可以显示每个特征对模型预测协作者角色的影响。假设我们有一个样本，其协作角色的特征包括困惑、开心、探究、讨论、失望、否定、影响力等。')
-st.markdown('通过Shap，我们可以看到该样本的预测是如何形成的：')
-st.markdown('>基线预测值：样本的基线预测值，即不考虑任何特征时的预测值。')
-st.markdown('>困惑：如果样本困惑程度较高，则其可能对协作角色预测产生负影响，使预测结果更偏向探究者或边缘者，因此其条形图为红色。')
-st.markdown('>开心：如果样本开心程度较高，则其可能对协作角色预测产生正影响，使预测结果更偏向协助者或引领者，因此其条形图为蓝色。')
-st.markdown('>探究：如果样本探究程度较高，则其可能对协作角色预测产生正影响，使预测结果更偏向探究者，因此其条形图为蓝色。')
-st.markdown('>讨论：如果样本讨论程度较高，则其可能对协作角色预测产生正影响，使预测结果更偏向引领者，因此其条形图为蓝色。')
-st.markdown('>失望：如果样本失望程度较高，则其可能对协作角色预测产生负影响，使预测结果更倾向于边缘者。')
-st.markdown('>否定：如果样本的否定程度较高，则其可能对协作角色的预测产生负影响，使预测结果更倾向于边缘者。')
-st.markdown('>影响力：如果样本的影响力程度较高，则其可能对协作角色的预测产生正影响，使预测结果更倾向于引领者。')
-st.markdown('因此，通过对Shap的结果分析，我们可以确定该样本的各个特征对模型预测结果的影响，从而了解模型是如何得出其预测结果的。')
+st.markdown('横轴为SHAP值，纵轴是该样本各个特征的取值；')
+st.markdown('蓝色代表该特征对预测有负向影响（箭头朝左，SHAP值减少），红色代表该特征对预测有正向影响（箭头超右，SHAP值增加）；')
+st.markdown('base value是基准值，f(x)是shap值；')
+
+st_shap(shap.force_plot(explainer.expected_value, shap_values, X_exp), height=200, width=800)
