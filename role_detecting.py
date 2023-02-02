@@ -186,4 +186,4 @@ st.markdown('横轴为SHAP值，纵轴是该样本各个特征的取值；')
 st.markdown('蓝色代表该特征对预测有负向影响（箭头朝左，SHAP值减少），红色代表该特征对预测有正向影响（箭头超右，SHAP值增加）；')
 st.markdown('base value是基准值，f(x)是shap值；')
 
-st_shap(shap.force_plot(explainer.expected_value[1], _shap_values[1], X_exp), height=200, width=800)
+st_shap(shap.force_plot(explainer.expected_value[1], _shap_values[1], X_exp), height=600, width=800)
