@@ -176,6 +176,7 @@ if user_name:
     shap_values = explainer.shap_values(_x)
     shap.initjs()
     st_shap(shap.force_plot(explainer.expected_value[1], shap_values[1], _x), height=200, width=800)
+    st_shap(shap.summary_plot(shap_values, _x), height=600, width=800)
 
 st.subheader('模型解释可视化解释示例：   ')
 st.markdown('Shap可以显示每个特征对模型预测协作者角色的影响。假设我们有一个样本，其协作角色的特征包括困惑、开心、探究、讨论、失望、否定、影响力等。')
