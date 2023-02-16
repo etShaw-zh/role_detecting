@@ -16,12 +16,12 @@ gitpath = 'data/'
 # path = localpath
 path = gitpath
 
-df = pd.read_csv(path + 'social_beh_cog_emo_indeces.csv', encoding='utf_8_sig')
+df = pd.read_csv(path + '【20230216】科学协作探究社会_认知_情感_行为数据.csv', encoding='utf_8_sig')
 
 rforest = RandomForestClassifier(n_estimators=100, max_depth=5, min_samples_split=2, random_state=0)
 
 # X_exp = df.drop(['group_id', 'group_type', 'name', 'role', 'role_label', '3', '12', '102', '021D', '021U', '021C', '111D', '111U', '030T', '030C', '201', '120D', '120U', '120C', '210', 'exp_none', 'int_none'], 1)
-X_exp = df.drop(['group_id', 'group_type', 'name', 'role', 'role_label', 'exp_none', 'int_none'], 1)
+X_exp = df.drop(['group_id', 'group_type', 'name', 'role', 'role_label', 'indegree', 'outdegree'], 1)
 y_exp = df['role_label']
 
 st.title('角色识别随机森林模型可解释分析')
