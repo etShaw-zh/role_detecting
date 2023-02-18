@@ -45,6 +45,7 @@ st.subheader('当前数据集的描述性统计： ')
 st.dataframe(X_exp.describe().T)
 
 rforest.fit(X_exp, y_exp)
+acc = rforest.score(X_exp, y_exp)
 _y_pred = rforest.predict(X_exp)
 _y = pd.DataFrame(_y_pred)
 _y.columns = ['type_code']
@@ -176,7 +177,7 @@ st.markdown('以第一行为例，表明高LSTAT（红色）对预测是负向�
 
 
 
-# st.write('模型准确率：   ', acc)
+st.write('模型准确率：   ', acc)
 
 st.subheader('模型解释：   ')
 st.subheader('单样本的解释：   ')
