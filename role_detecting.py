@@ -41,7 +41,7 @@ rforest.fit(X_exp, y_exp)
 _y_pred = rforest.predict(X_exp)
 _y = pd.DataFrame(_y_pred)
 _y.columns = ['type_code']
-# acc = round(accuracy_score(y_exp, _y_pred), 5)
+acc = round(accuracy_score(y_exp, _y_pred), 5)
 
 def _accuracy(f, Y_test, X_test):
     acc = accuracy_score(Y_test, f(X_test))
@@ -164,7 +164,7 @@ st.markdown('以第一行为例，表明高LSTAT（红色）对预测是负向�
 
 
 
-# st.write('模型准确率：   ', acc)
+st.write('模型准确率：   ', acc)
 
 st.subheader('模型解释：   ')
 st.subheader('单样本的解释：   ')
