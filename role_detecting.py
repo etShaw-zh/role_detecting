@@ -25,8 +25,8 @@ rforest = RandomForestClassifier(n_estimators=500, max_depth=5, min_samples_spli
 X_exp = df.drop(['group_id', 'group_type', 'name', 'role', 'role_label'], 1)
 y_exp = df['role_label']
 
-x_train,x_test = train_test_split(X_exp, test_size=0.2, random_state=42)
-y_train,y_test = train_test_split(y_exp, test_size=0.2, random_state=42)
+# x_train,x_test = train_test_split(X_exp, test_size=0.2, random_state=42)
+# y_train,y_test = train_test_split(y_exp, test_size=0.2, random_state=42)
 
 st.title('角色识别随机森林模型可解释分析')
 
@@ -41,11 +41,16 @@ st.title('角色识别随机森林模型可解释分析')
 st.subheader('当前数据集的描述性统计： ')
 st.dataframe(X_exp.describe().T)
 
-rforest.fit(x_train, y_train)
-_y_pred = rforest.predict(x_test)
+rforest.fit(X_exp, y_exp)
+_y_pred = rforest.predict(X_exp)
 _y = pd.DataFrame(_y_pred)
 _y.columns = ['type_code']
-acc = round(accuracy_score(y_test, _y_pred), 5)
+
+# rforest.fit(x_train, y_train)
+# _y_pred = rforest.predict(x_test)
+# _y = pd.DataFrame(_y_pred)
+# _y.columns = ['type_code']
+# acc = round(accuracy_score(y_test, _y_pred), 5)
 
 def _accuracy(f, Y_test, X_test):
     acc = accuracy_score(Y_test, f(X_test))
@@ -87,8 +92,8 @@ def myfuc(f, X, y):
         'Recall_macro':[f'{recall_mean:.3f} ± {recall_std:.3f}'],
     }
 
-# model_val_df = pd.DataFrame(myfuc(rforest, X_exp, y_exp))
-# st.dataframe(model_val_df)
+model_val_df = pd.DataFrame(myfuc(rforest, X_exp, y_exp))
+st.dataframe(model_val_df)
 
 name_to_id = {
     'A—Ele—马辰歌—探究类': 0,
@@ -168,7 +173,7 @@ st.markdown('以第一行为例，表明高LSTAT（红色）对预测是负向�
 
 
 
-st.write('模型准确率：   ', acc)
+# st.write('模型准确率：   ', acc)
 
 st.subheader('模型解释：   ')
 st.subheader('单样本的解释：   ')
