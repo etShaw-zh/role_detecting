@@ -9,6 +9,7 @@ from statistics import mean, stdev
 from sklearn.model_selection import KFold
 import torch
 from PIL import Image
+from sklearn.model_selection import train_test_split
 
 localpath = 'role_detecting/data/'
 gitpath = 'data/'
@@ -24,6 +25,9 @@ rforest = RandomForestClassifier(n_estimators=500, max_depth=5, min_samples_spli
 X_exp = df.drop(['group_id', 'group_type', 'name', 'role', 'role_label'], 1)
 y_exp = df['role_label']
 
+x_train,x_test = train_test_split(X_exp, test_size=0.2, random_state=42)
+y_train,y_test = train_test_split(y_exp, test_size=0.2, random_state=42)
+
 st.title('角色识别随机森林模型可解释分析')
 
 # st.subheader('当前数据集： ')
@@ -37,11 +41,11 @@ st.title('角色识别随机森林模型可解释分析')
 st.subheader('当前数据集的描述性统计： ')
 st.dataframe(X_exp.describe().T)
 
-rforest.fit(X_exp, y_exp)
-_y_pred = rforest.predict(X_exp)
+rforest.fit(x_train, y_train)
+_y_pred = rforest.predict(x_test)
 _y = pd.DataFrame(_y_pred)
 _y.columns = ['type_code']
-acc = round(accuracy_score(y_exp, _y_pred), 5)
+acc = round(accuracy_score(y_test, _y_pred), 5)
 
 def _accuracy(f, Y_test, X_test):
     acc = accuracy_score(Y_test, f(X_test))
