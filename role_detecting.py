@@ -11,6 +11,9 @@ import torch
 from PIL import Image
 from sklearn.model_selection import train_test_split
 
+np.random.seed(123) 
+pd.options.mode.chained_assignment = None  
+
 localpath = 'role_detecting/data/'
 gitpath = 'data/'
 
