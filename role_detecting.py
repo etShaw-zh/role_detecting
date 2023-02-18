@@ -92,8 +92,8 @@ def myfuc(f, X, y):
         'Recall_macro':[f'{recall_mean:.3f} ± {recall_std:.3f}'],
     }
 
-model_val_df = pd.DataFrame(myfuc(rforest, X_exp, y_exp))
-st.dataframe(model_val_df)
+# model_val_df = pd.DataFrame(myfuc(rforest, X_exp, y_exp))
+# st.dataframe(model_val_df)
 
 name_to_id = {
     'A—Ele—马辰歌—探究类': 0,
